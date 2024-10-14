@@ -38,12 +38,6 @@ torch.manual_seed(args.seed)
 np.random.seed(args.seed)
 
 def main():
-    # Create Dir
-    result_dir = Path(args.save_dir)
-    result_dir.mkdir_p()
-    experiment_dir = result_dir.joinpath('{}/'.format(args.experiment_name))
-    experiment_dir.mkdir_p()
-
     # GPU selections
     str_ids = args.gpu_ids.split(',')
     gpu_ids = []
@@ -67,7 +61,7 @@ def main():
     model = torch.nn.DataParallel(model, device_ids = gpu_ids)
     model.eval()
 
-    table_calculate_size(model)
+    # table_calculate_size(model) # calculate model size
 
     with torch.no_grad(): 
         model.eval()
@@ -78,7 +72,13 @@ def main():
         message += f"t_rmse: {tester.errors[i]['t_rmse']:.4f}, r_rmse: {tester.errors[i]['r_rmse']:.4f}, "
         print(message)
 
-    tester.generate_plots(experiment_dir, 30)
+    # # Create Dir
+    # result_dir = Path(args.save_dir)
+    # result_dir.mkdir_p()
+    # experiment_dir = result_dir.joinpath('{}/'.format(args.experiment_name))
+    # experiment_dir.mkdir_p()
+
+    # tester.generate_plots(experiment_dir, 30) # generate plots 
 
 if __name__ == "__main__":
     main()
