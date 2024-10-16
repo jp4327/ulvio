@@ -78,7 +78,7 @@ def main():
     # experiment_dir = result_dir.joinpath('{}/'.format(args.experiment_name))
     # experiment_dir.mkdir_p()
 
-    # tester.generate_plots(experiment_dir, 30) # generate plots 
+    # tester.generate_plots(experiment_dir, 30) # generate trajectory plots
 
 if __name__ == "__main__":
     main()

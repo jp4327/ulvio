@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="UL-VIO: Ultra-lightweight Visual-Inertial Odometry with Noise Robust Test-time Adaptation.">
+  <meta name="keywords" content="Visual-inertial odometry, VIO, Model compression, Test-time adaptationm, TTA">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UL-VIO: Ultra-lightweight Visual-Inertial Odometry with Noise Robust Test-time Adaptation</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZFEVSTRQ50"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-ZFEVSTRQ50');
+  </script>
+
+  <!-- LaTeX math -->
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({            
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}            
+      });
+    </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">UL-VIO:<br> Ultra-lightweight Visual-Inertial
+              Odometry <br> with
+              Noise Robust
+              Test-time Adaptation</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://sites.google.com/view/jinho" target="_blank">Jinho Park</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://icl.snu.ac.kr/" target="_blank">Se Young Chun</a><sup>2</sup>,</span>
+              <span class="author-block">
+                <a href="https://www.ee.columbia.edu/~mgseok/" target="_blank">Mingoo Seok</a><sup>1</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Columbia University,</span>
+              <span class="author-block"><sup>2</sup>Seoul National University</span>
+              <br>
+              <span class="author-block">European Conference on Computer Vision (ECCV) 2024</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2409.13106" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-paperclip"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2409.13106" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <!-- Video Link. -->
+                <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=Wbu-nBEaFcI"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <!-- Slide. -->
+                <span class="link-block">
+                  <a href="./static/files/ulvio_slide.pdf" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Slide</span>
+                  </a>
+                </span>
+                <!-- Poster. -->
+                <span class="link-block">
+                  <a href="./static/files/ulvio_poster.pdf" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-images"></i>
+                    </span>
+                    <span>Poster</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/jp4327/ulvio-code"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- sec : abtsract -->
+  <section class="colored-section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Data-driven visual-inertial odometry (VIO) has received highlights for its performance since VIOs are a
+              crucial
+              compartment in autonomous robots. However, their deployment on resource-constrained devices is non-trivial
+              since large
+              network parameters should be accommodated in the device memory. Furthermore, these networks may risk
+              failure
+              post-deployment due to environmental distribution shifts at test time. In light of this, we propose UL-VIO
+              -- an
+              ultra-lightweight (&lt1M) VIO network capable of test-time adaptation (TTA) based on visual-inertial
+              consistency.
+              Specifically, we perform model compression to the network while preserving the low-level encoder part,
+              including all
+              BatchNorm parameters for resource-efficient test-time adaptation. It achieves 36X smaller network size
+              than
+              state-of-the-art with a minute increase in error -- 1% on the KITTI dataset. For test-time adaptation, we
+              propose to
+              use the inertia-referred network outputs as pseudo labels and update the BatchNorm parameter for
+              lightweight yet
+              effective adaptation. To the best of our knowledge, this is the first work to perform noise-robust TTA on
+              VIO.
+              Experimental results on the KITTI, EuRoC, and Marulan datasets demonstrate the effectiveness of our
+              resource-efficient
+              adaptation method under diverse TTA scenarios with dynamic domain shifts.
+            </p>
+          </div>
+          </p>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+  <section class="section"></section>
+  <div class="container is-max-widescreen">
+
+    <div class="rows">
+
+      <style>
+        .centered-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+
+        .interpolation-image {
+          display: block;
+          margin: 20px 0;
+          /* Give some space above and below the image */
+        }
+      </style>
+
+      <!-- sec : motivation -->
+      <section>
+        <div class="rows">
+          <div class="row is-full-width">
+            <h2 class="title is-3">Motivation</h2>
+            <div class="columns is-vcentered is-centered">
+              <br>
+              <img src="./static/images/motivation.png" class="interpolation-image" alt="Motivation"
+                style="width: 80%;" />
+            </div>
+            <p style="text-align:justify">
+              Deploying VIO networks on mobile autonomous platforms poses a significant challenge due to the limited
+              memory and
+              computing capacity of such devices.
+              More importantly, accessing off-chip DRAM memory requires two to three orders of magnitude more power
+              compared to on-chip memory access, thereby imposing a significant limitation on the size of the networks
+              that can be deployed on these platforms.
+              <br><br>
+              Yet another concern for mobile VIO platforms is that they may suffer from post-deployment performance
+              degradation when
+              encountering out-of-distribution (OoD) data at test time.
+              For example, a network trained on clean camera image sequences might be prone to failure when the image
+              distribution
+              shifts due to environmental conditions, e.g., shadow, snow, and rain.
+            </p>
+          </div>
+        </div>
+      </section>
+      <br><br><br>
+
+      <!-- sec : model compression -->
+      <section>
+        <div class="rows">
+          <div class="row is-full-width">
+            <h2 class="title is-3">Model Compression</h2>
+            <div class="columns is-vcentered is-centered">
+              <br>
+              <img src="./static/images/model_compression.png" class="interpolation-image" alt="overall pipeline"
+                style="width: 80%;" />
+            </div>
+            <p style="text-align:justify">
+              We target sub-million parameter count for the model to be accommodated in the on-chip memory of a mobile
+              platform.
+              Commercial mobile processors like Apple A16 and Qualcomm Snapdragon only possess a few MB of on-chip
+              memory.
+              We reduce the size of the visual encoder while maintaining the BatchNorm (BN) parameter size for test-time
+              adaptation
+              since tuning
+              BN is a preferred method for adaptation.
+              <br><br>
+              We summarize our approach and its effects in the following:
+            </p>
+            <ul style="list-style-type: disc; padding-left: 20px;"></ul>
+            <li>Add an AveragePool after the last convolutional layer in $E_\text{visual}$. This gives us $117 \times$
+              reduction in
+              $E_\text{visual}$.</li>
+            <li>Reduce the channel size in $E_\text{inertial}$ since the parameter number is quadratically
+              proportional to it, attaining
+              $8 \times$ compression in $E_\text{inertial}$.</li>
+            <li>Replace the LSTM with fully connected layers for the $D_\text{fused}$, resulting in $161 \times$
+              downsizing in
+              $D_\text{fused}$.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <br><br><br>
+
+      <!-- sec : model compression results -->
+      <section>
+        <div class="rows">
+          <div class="row is-full-width">
+            <h2 class="title is-3">Model Compression - Results</h2>
+            <div class="columns is-vcentered is-centered">
+              <br>
+              <img src="./static/images/model_compression_results.png" class="interpolation-image"
+                alt="relationship map generation" style="width: 80%;" />
+            </div>
+            <p style="text-align:justify">
+              Our compressed result gives $36.45 \times$ lower model size than that of the target state-of-the-art
+              baseline, NASVIO, while having a minute increase in relative translation/rotation errors $\{ t_{rel},
+              r_{rel} \} =
+              \{ 1.11\%, 1.05^{\circ} \}$ against the art.
+              For similarly-sized NASVIO maintaining the architecture, we achieve translation/rotation error reduction
+              of $\{ 3.80\%,
+              1.94^{\circ} \}$.
+            </p>
+          </div>
+        </div>
+      </section>
+      <br><br><br>
+
+      <!-- sec : trajectory results -->
+      <section>
+        <div class="rows">
+          <div class="row is-full-width">
+            <h2 class="title is-3">Trajectory Results</h2>
+            <div class="columns is-vcentered is-centered">
+              <br>
+              <img src="./static/images/trajectory.png" class="interpolation-image" alt="relationship map generation"
+                style="width: 60%;" />
+            </div>
+            <p style="text-align:justify">
+              Our network performs comparably to others on Seq. $07$ and outperforms others on Seq. $10$.
+            </p>
+          </div>
+        </div>
+      </section>
+      <br><br><br>
+
+      <!-- sec : overall pipeline -->
+      <section>
+        <div class="rows">
+          <div class="row is-full-width">
+            <h2 class="title is-3">Multi-modal Consistency-based TTA</h2>
+            <div class="columns is-vcentered is-centered">
+              <br>
+              <img src="./static/images/overall_vio.png" class="interpolation-image" alt="relationship map generation"
+                style="width: 80%;" />
+            </div>
+            <ul style="list-style-type: disc; padding-left: 20px;"></ul>
+            <li>Visual encoder deduces visual features from pairwise images.</li>
+            <li>Inertial encoder does so from the inertial input.</li>
+            <li>Decoder predicts pose transformation from fused features.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <br><br><br>
+
+      <!-- sec : visual encoder -->
+      <section>
+        <div class="rows">
+          <div class="row is-full-width">
+            <h2 class="title is-3">Dictionary-based Visual Encoder Adaptation</h2>
+            <div class="columns is-vcentered is-centered">
+              <br>
+              <img src="./static/images/visual_encoder.png" class="interpolation-image"
+                alt="relationship map generation" style="width: 70%;" />
+            </div>
+            <p style="text-align:justify">
+              Only the weights of the visual encoder are modified during adaptation while the weights of other modules
+              are fixed.
+              As shown here, domain distinctive features from the early layers of the visual encoder are
+              utilized for domain shift detection.
+              The visual encoder hosts an auxiliary dictionary to store and update learnable BN parameters corresponding
+              to different
+              noise types.
+            </p>
+          </div>
+        </div>
+      </section>
+      <br><br><br>
+
+      <!-- sec : Motivation for Multi-modal Consistency -->
+      <section>
+        <div class="rows">
+          <div class="row is-full-width">
+            <h2 class="title is-3">Motivation for Multi-modal Consistency</h2>
+            <div class="columns is-vcentered is-centered">
+              <br>
+              <img src="./static/images/fig_noise_bar_corr.png" class="interpolation-image"
+                alt="relationship map generation" style="width: 70%;" />
+            </div>
+            <p style="text-align:justify">
+              Although the inertial-inferred pose estimates exhibit sub-par performance compared to that of vision, it
+              is unaffected
+              by the weather conditions.
+              When we simulate adversarial weather conditions on KITTI-C, we observe that the fused-feature-based poses
+              become much
+              more erroneous than the inertial-referred poses.
+              This demonstrates a strong correlation ($r = 0.86$) between the inertial-inferred output and the ground
+              truth.
+            </p>
+          </div>
+        </div>
+      </section>
+      <br><br><br>
+
+      <!-- sec : Comparison Against Fine-tuned Baselines -->
+      <section>
+        <div class="rows">
+          <div class="row is-full-width">
+            <h2 class="title is-3">Comparison Against Fine-tuned Baselines</h2>
+            <div class="columns is-vcentered is-centered">
+              <br>
+              <img src="./static/images/result_FT.png" class="interpolation-image" alt="relationship map generation"
+                style="width: 70%;" />
+            </div>
+            <p style="text-align:justify">
+              We demonstrate the effectiveness of our TTA method by comparing it with networks fine-tuned with
+              adversarial noises.
+              Except for one case, e.g., multiplicative noise, our TTA method has the best or second-best accuracy.
+              This case assumes stationary domain shift.
+              Here, we fine-tuned the baseline model, trained initially on the noise-free source domain, by introducing
+              the
+              corresponding visual corruption.
+            </p>
+          </div>
+        </div>
+      </section>
+      <br><br><br>
+
+      <!-- sec : Continual TTA -->
+      <section>
+        <div class="rows">
+          <div class="row is-full-width">
+            <h2 class="title is-3">Continual TTA</h2>
+            <div class="columns is-vcentered is-centered">
+              <br>
+              <img src="./static/images/result_bar.png" class="interpolation-image" alt="relationship map generation"
+                style="width: 70%;" />
+            </div>
+            <p style="text-align:justify">
+              We report VIO results for dynamically corrupted vision inputs on KITTI Seq. $07$ with and without TTA.
+              The sequence starts with clean images until $t_0 = 22$s.
+              After $t_0$, the system instead receives blurred images, which continues until $t_1 = 88$s.
+              Then, the distribution shift is removed, and the image input returns to the uncorrupted source domain.
+              Such a domain shift results in a pose-wise $t_{rmse}$ increase from $0.022$ m to $0.133$ m.
+              TTA reduces the error by $29.7 \%$ to $0.093$ m.
+            </p>
+          </div>
+        </div>
+      </section>
+      <br><br><br>
+
+      <!-- sec : Continual TTA w/ Dynamic Noise Shift -->
+      <section>
+        <div class="rows">
+          <div class="row is-full-width">
+            <h2 class="title is-3">Continual TTA w/ Dynamic Noise Shifts</h2>
+            <div class="columns is-vcentered is-centered">
+              <br>
+              <img src="./static/images/result_continual.png" class="interpolation-image"
+                alt="relationship map generation" style="width: 70%;" />
+            </div>
+            <p style="text-align:justify">
+              We perform vision corruptions to KITTI and EuRoC datasets with methods from ImageNet-C.
+              With continual TTA on KITTI, our UL-VIO achieves $18\%$ reduction in pose-wise $t_{rmse}$ on
+              average.
+              The domain-discriminative TTA governs $K$ sets of lightweight BN parameters adequately switched based on
+              domain matching
+              with high $ddf$ acc. of $99.6\%$.
+            </p>
+          </div>
+        </div>
+      </section>
+      <br><br><br>
+
+      <!--BibTex citation -->
+      <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+          <h2 class="title">BibTeX</h2>
+          <pre><code>@inproceedings{park2024ulvio,
+      title={UL-VIO: Ultra-lightweight Visual-Inertial Odometry with Noise Robust Test-time Adaptation},
+      author={Park, Jinho and Chun, Se Young and Seok, Mingoo},
+      booktitle={European Conference on Computer Vision},
+      year={2024},
+      organization={Springer}
+      }</code></pre>
+        </div>
+      </section>
+      <!--End BibTex citation -->
+
+
+      <footer class="footer">
+        <!-- <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="./static/videos/nerfies_paper.pdf">
+          <i class="fas fa-file-pdf"></i>
+        </a>
+        <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+          <i class="fab fa-github"></i>
+        </a>
+      </div> -->
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This website is licensed under a <a rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                  Commons Attribution-ShareAlike 4.0 International License</a>.
+              </p>
+              <p>
+                This means you are free to borrow the <a href="https://github.com/nerfies/nerfies.github.io">source
+                  code</a> of this website,
+                we just ask that you link back to this page in the footer.
+              </p>
+            </div>
+          </div>
+        </div>
+    </div>
+    </footer>
+
+</body>
+
+</html>
