@@ -75,12 +75,6 @@ Seq: 07, t_rel: 3.2585, r_rel: 2.6176, t_rmse: 0.0594, r_rmse: 0.0873,
 Seq: 10, t_rel: 3.0715, r_rel: 1.2113, t_rmse: 0.0611, r_rmse: 0.0859, 
 ```
 
-## Test the pretrained model
-
-Example command:
-
-      python test.py --data_dir './data' --model './pretrain_models/vf_512_if_256_5e-05.model' --gpu_ids '0' --experiment_name 'pretrained'
-
 ## Acknowledgements
 
 This code is borrowed heavily from [NASVIO](https://github.com/unchenyu/NASVIO) and [Visual-Selective-VIO](https://github.com/mingyuyng/Visual-Selective-VIO). We thank the authors for sharing their codes.
