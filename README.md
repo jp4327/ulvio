@@ -24,7 +24,7 @@ Experimental results on the KITTI, EuRoC, and Marulan datasets demonstrate the e
 
 ## Installation
 
-      $git clone https://github.com/jp4327/ulvio-code
+      $git clone https://github.com/jp4327/ulvio
       $conda env create --file environment.yaml
       $conda activate ulvio
 
