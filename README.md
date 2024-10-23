@@ -1,16 +1,15 @@
 # UL-VIO (ECCV 2024)
 
 <a href="https://arxiv.org/abs/2409.13106"><img src="https://img.shields.io/badge/Paper-arXiv:2409.13106-Green"></a>
-[![project_page](https://img.shields.io/badge/-project%20page-skyblue)](https://jp4327.github.io/ulvio/) 
+[![project_page](https://img.shields.io/badge/-project%20page-skyblue)](https://jp4327.github.io/ulvio/)
 
 <!-- <a href="https://arxiv.org/abs/2409.13106"><img src="https://img.shields.io/badge/Paper-arXiv:2409.13106-Green"></a> -->
-
 
 This repository contains the evaluation code for the following paper:
 
 [**UL-VIO: Ultra-lightweight Visual-Inertial Odometry with Noise Robust Test-time Adaptation**](https://arxiv.org/abs/2409.13106)
 
-<img src="figures/figure.png" alt="overview" width="700"/> 
+<img src="docs/figures/figure.png" alt="overview" width="700"/>
 
 >Abstract - Data-driven visual-inertial odometry (VIO) has received highlights for its performance since VIOs are a crucial compartment in autonomous robots.
 However, their deployment on resource-constrained devices is non-trivial since large network parameters should be accommodated in the device memory.
@@ -36,6 +35,7 @@ The code in this repository is tested on [KITTI](https://www.cvlibs.net/datasets
       $source data_prep.sh 
 
 After running the script,`data` folder shall look like the following:
+
 ```
 data
 ├── data_prep.sh
@@ -64,11 +64,13 @@ data
 ```
 
 ## Evaluation
+
 Run pre-trained model with the following command:
 
       $python test.py
 
 The resulting CLI output looks like:
+
 ```
 Seq: 05, t_rel: 4.2233, r_rel: 1.3760, t_rmse: 0.0564, r_rmse: 0.0744, 
 Seq: 07, t_rel: 3.2585, r_rel: 2.6176, t_rmse: 0.0594, r_rmse: 0.0873, 
